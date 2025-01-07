@@ -11,33 +11,41 @@
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
-    <div class="w-auto max-height-vh-100" id="sidenav-collapse-main">
+    <div class="w-auto max-height-vh-100 collapse navbar-collapse h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'dashboard' ? 'active bg-gradient-primary' : '' }} "
-                    href="/">
+                <a class="nav-link text-white {{ $activePage == 'dashboard' ? 'active bg-gradient-primary' : '' }}" href="/">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                        <i class="material-icons opacity-10">dashboard</i>
                     </div>
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'user-profile' ? 'active bg-gradient-primary' : '' }} "
-                    href="/">
+                <a class="nav-link text-white {{ $activePage == 'user-management' ? 'active bg-gradient-primary' : '' }} "
+                    href="{{ route('user')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1.2rem;" class="fas fa-user-circle ps-2 pe-2 text-center"></i>
+                        <i class="material-icons opacity-10">person</i>
                     </div>
-                    <span class="nav-link-text ms-1">User Profile</span>
+                    <span class="nav-link-text ms-1">User</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'user-management' ? ' active bg-gradient-primary' : '' }} "
-                href="/">
+                <a class="nav-link text-white {{ $activePage == 'movie' ? ' active bg-gradient-primary' : '' }} "
+                href="{{ route('movie')}}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i style="font-size: 1rem;" class="fas fa-lg fa-list-ul ps-2 pe-2 text-center"></i>
+                    <span class="material-icons opacity-10">movie</span>
                 </div>
                 <span class="nav-link-text ms-1">Movie</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white"
+                href="/">
+                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <span class="material-icons">logout</span>
+                </div>
+                <span class="nav-link-text ms-1">Sing Up</span>
                 </a>
             </li>
         </ul>

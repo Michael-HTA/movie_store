@@ -38,6 +38,7 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
+                        <p>something is not</p>
                         <form method='POST' action='{{ route('user-profile') }}'>
                             @csrf
                             <div class="row">

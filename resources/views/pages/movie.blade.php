@@ -17,7 +17,7 @@
                         <div class=" me-3 my-3 text-end">
                             <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i
                                     class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New
-                                User</a>
+                                Movie</a>
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
@@ -39,10 +39,14 @@
                                                 DESCRIPTION</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                CATEGORY</th>
+                                                GENRE</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                CREATION DATE
+                                                RELEASE DATE
+                                            </th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                TYPE
                                             </th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
@@ -77,6 +81,9 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">Admin</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">TV Series</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">22/03/18</span>
@@ -127,6 +134,9 @@
                                                 <span class="text-secondary text-xs font-weight-bold">Creator</span>
                                             </td>
                                             <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">TV Series</span>
+                                            </td>
+                                            <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">16/06/18</span>
                                             </td>
                                             <td class="align-middle">
@@ -172,6 +182,9 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">Member</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">TV Series</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">30/06/18</span>
@@ -220,6 +233,9 @@
                                                 <span class="text-secondary text-xs font-weight-bold">Member</span>
                                             </td>
                                             <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">Movie</span>
+                                            </td>
+                                            <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">16/06/19</span>
                                             </td>
                                             <td class="align-middle">
@@ -266,6 +282,9 @@
                                                 <span class="text-secondary text-xs font-weight-bold">Creator</span>
                                             </td>
                                             <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">TV Series</span>
+                                            </td>
+                                            <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">16/06/18</span>
                                             </td>
                                             <td class="align-middle">
@@ -309,6 +328,9 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">Creator</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold">TV Series</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">26/06/18</span>

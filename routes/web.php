@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\WebControllers\ActorController;
+use App\Http\Controllers\WebControllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,9 +16,7 @@ Route::get('/logout', function () {
     return view('dashboard.index');
 })->name('logout');
 
-Route::get('/user', function(){
-    return view('pages.profile');
-})->name('user');
+Route::get('/users',[AdminController::class, 'index'])->name('user');
 
 Route::get('/movie', function(){
     return view('pages.movie');
@@ -44,3 +44,5 @@ Route::get('/register', function(){
 Route::get('/verify', function(){
     return 'verify';
 })->name('verify');
+
+Route::get('/test',[ActorController::class,'index']);

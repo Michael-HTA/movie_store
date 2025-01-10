@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\Production;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +23,26 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Production::factory(10)->create();
+         // Admin users data
+         Admin::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin'),
+            'role_id' => 1,
+            'image' => 'default'
+        ]);
+
+
+
+        $this->call([
+            AdminSeeder::class,
+            RoleSeeder::class,
+            TypeSeeder::class,
+            GenreSeeder::class,
+            DirectorSeeder::class,
+            ProductionSeeder::class,
+            ActorSeeder::class,
+            MovieSeeder::class,
+        ]);
     }
 }

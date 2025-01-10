@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Movie extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     public function actors(): BelongsToMany {
         return $this->belongsToMany(Actor::class);
@@ -19,15 +20,15 @@ class Movie extends Model
     }
 
     public function type(){
-        return $this->hasOne(Type::class);
+        return $this->belongsTo(Type::class);
     }
 
     public function director(){
-        return $this->hasOne(Director::class);
+        return $this->belongsTo(Director::class);
     }
 
     public function production(){
-        return $this->hasOne(Production::class);
+        return $this->belongsTo(Production::class);
     }
 
     public function admins(){
@@ -35,6 +36,6 @@ class Movie extends Model
     }
 
     public function admin(){
-        return $this->hasOne(Admin::class);
+        return $this->belongsTo(Admin::class);
     }
 }

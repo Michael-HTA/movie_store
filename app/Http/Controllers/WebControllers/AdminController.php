@@ -4,7 +4,7 @@ namespace App\Http\Controllers\WebControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRegisterRequest;
-use App\Http\Requests\AdminStoreRequest;
+use App\Http\Requests\AdminUpdateRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 
@@ -65,7 +65,7 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdminStoreRequest $request)
+    public function update(AdminUpdateRequest $request)
     {
         $result = $request->validated();
 

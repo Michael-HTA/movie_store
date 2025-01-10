@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class AdminRegisterRequest extends FormRequest
 {
@@ -22,7 +23,11 @@ class AdminRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'email' => 'required|email|unique:admin',
+            'password' => ['required', Password::min(6)->mixedCase()->numbers(), 'regex:/^[a-zA-Z0-9]+$/'],
+            'image' => 'required|image|max:2048',
+            'role_id' => 'required|integer',
         ];
     }
 }

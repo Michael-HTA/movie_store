@@ -17,7 +17,7 @@ class AdminController extends Controller
     {
         $admins = Admin::all();
 
-        return view('pages.profile', ['admins' => $admins]);
+        return view('pages.users', ['admins' => $admins]);
     }
 
     /**
@@ -49,7 +49,7 @@ class AdminController extends Controller
     {
         $admin = Admin::find($id);
 
-        return view('pages.profile-detail',['admin' => $admin]);
+        return view('pages.user-profile',['admin' => $admin]);
     }
 
     /**
@@ -59,7 +59,7 @@ class AdminController extends Controller
     {
         $admin = Admin::find($id);
 
-        return view('pages.profile-edit',['admin' => $admin]);
+        return view('pages.user-edit',['admin' => $admin]);
     }
 
     /**
@@ -67,9 +67,17 @@ class AdminController extends Controller
      */
     public function update(AdminUpdateRequest $request)
     {
-        $result = $request->validated();
+        $data = $request->validated();
 
-        $admin = new Admin($result);
+        $admin = Admin::find($request->id);
+
+        if (!$admin) {
+            return back()->withErrors(['error' => 'Admin not found!']);
+        }
+
+        foreach($data as $key => $value){
+            $admin->$key = $value;
+        }
 
         $admin->save();
 

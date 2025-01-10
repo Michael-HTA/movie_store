@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
-class AdminUpdateRequest extends FormRequest
+class AdminDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +22,7 @@ class AdminUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'    => 'required|integer',
-            'name' => 'required|string',
-            'email' => 'required|email|unique:admin',
-            'image' => 'required|image|max:2048',
-            'role_id' => 'required|integer',
+            //
         ];
     }
 }

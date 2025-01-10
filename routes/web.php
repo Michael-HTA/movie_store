@@ -17,6 +17,9 @@ Route::get('/logout', function () {
 })->name('logout');
 
 Route::get('/users',[AdminController::class, 'index'])->name('user');
+Route::get('/users/{id}',[AdminController::class, 'show']);
+Route::get('/users/{id}/edit',[AdminController::class, 'edit']);
+Route::post('user/update',[AdminController::class, 'update'])->name('admin.update');
 
 Route::get('/movie', function(){
     return view('pages.movie');

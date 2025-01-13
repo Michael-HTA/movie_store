@@ -7,12 +7,19 @@ use Illuminate\Validation\Rules\Password;
 
 class AdminRegisterRequest extends FormRequest
 {
+
+    /**
+     * Indicates if the validator should stop on the first rule failure.
+     *
+     * @var bool
+     */
+    protected $stopOnFirstFailure = true;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,7 +34,7 @@ class AdminRegisterRequest extends FormRequest
             'email' => 'required|email|unique:admin',
             'password' => ['required', Password::min(6)->mixedCase()->numbers(), 'regex:/^[a-zA-Z0-9]+$/'],
             'image' => 'required|image|max:2048',
-            'role_id' => 'required|integer',
+            'role_id' => 'required|integer|exists:roles',
         ];
     }
 }

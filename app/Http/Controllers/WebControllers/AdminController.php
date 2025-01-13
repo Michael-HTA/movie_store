@@ -33,9 +33,9 @@ class AdminController extends Controller
      */
     public function store(AdminRegisterRequest $request)
     {
-        $adminData = $request->validated();
+        $validated = $request->validated();
 
-        $admin = new Admin($adminData);
+        $admin = new Admin($validated);
 
         $admin->save();
 
@@ -49,6 +49,10 @@ class AdminController extends Controller
     {
         $admin = Admin::find($id);
 
+        if (!$admin) {
+            return back()->withErrors(['error' => 'User not found!']);
+        }
+
         return view('pages.user-profile',['admin' => $admin]);
     }
 
@@ -58,6 +62,10 @@ class AdminController extends Controller
     public function edit($id)
     {
         $admin = Admin::find($id);
+
+        if (!$admin) {
+            return back()->withErrors(['error' => 'User not found!']);
+        }
 
         return view('pages.user-edit',['admin' => $admin]);
     }
@@ -70,10 +78,6 @@ class AdminController extends Controller
         $data = $request->validated();
 
         $admin = Admin::find($request->id);
-
-        if (!$admin) {
-            return back()->withErrors(['error' => 'Admin not found!']);
-        }
 
         foreach($data as $key => $value){
             $admin->$key = $value;
@@ -93,6 +97,6 @@ class AdminController extends Controller
 
         $admin->destroy();
 
-        return redirect('/users')->with('info','Admin has been deleted');
+        return redirect('/users')->with('info','User has been deleted');
     }
 }

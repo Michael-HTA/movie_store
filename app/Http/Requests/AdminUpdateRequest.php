@@ -7,12 +7,19 @@ use Illuminate\Validation\Rules\Password;
 
 class AdminUpdateRequest extends FormRequest
 {
+
+    /**
+     * Indicates if the validator should stop on the first rule failure.
+     *
+     * @var bool
+     */
+    protected $stopOnFirstFailure = true;
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,11 +30,11 @@ class AdminUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'    => 'required|integer',
+            'id'    => 'required|integer|exists:admins',
             'name' => 'required|string',
-            'email' => 'required|email|unique:admin',
+            'email' => 'required|email',
             'image' => 'required|image|max:2048',
-            'role_id' => 'required|integer',
+            'role_id' => 'required|integer|exists:roles',
         ];
     }
 }

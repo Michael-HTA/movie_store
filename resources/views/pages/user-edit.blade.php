@@ -32,9 +32,14 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('admins.update', ['admin' => 1]) }}'>
+                        <form method='POST' action='{{ route('admin.update', ['admin' => 1]) }}'>
                             @csrf
-                            @method('PUT')
+                            {{-- @method('PUT') --}}
+                            <div class="row">
+                                <div class="col">
+                                    <input type="number" value="{{$admin->id}}" hidden>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>

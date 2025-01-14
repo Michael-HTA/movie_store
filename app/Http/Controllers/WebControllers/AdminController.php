@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\WebControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminDeleteRequest;
 use App\Http\Requests\AdminRegisterRequest;
 use App\Http\Requests\AdminUpdateRequest;
 use App\Models\Admin;
-use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -15,9 +15,11 @@ class AdminController extends Controller
      */
     public function index()
     {
+        // dd('this is working');
+
         $admins = Admin::all();
 
-        return view('pages.users', ['admins' => $admins]);
+        return view('user.users', ['admins' => $admins]);
     }
 
     /**
@@ -25,7 +27,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('pages.register');
+        // dd('this is working');
+        return view('user.user-register');
     }
 
     /**
@@ -33,7 +36,11 @@ class AdminController extends Controller
      */
     public function store(AdminRegisterRequest $request)
     {
+        $imagePath = $request->file('image')->store('images', 'public');
+
         $validated = $request->validated();
+
+        $validated['image'] = $imagePath;
 
         $admin = new Admin($validated);
 
@@ -53,7 +60,7 @@ class AdminController extends Controller
             return back()->withErrors(['error' => 'User not found!']);
         }
 
-        return view('pages.user-profile',['admin' => $admin]);
+        return view('user.user-profile',['admin' => $admin]);
     }
 
     /**
@@ -67,7 +74,7 @@ class AdminController extends Controller
             return back()->withErrors(['error' => 'User not found!']);
         }
 
-        return view('pages.user-edit',['admin' => $admin]);
+        return view('user.user-edit',['admin' => $admin]);
     }
 
     /**
@@ -91,11 +98,15 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(AdminDeleteRequest $request)
     {
-        $admin = Admin::find($request->id);
+        // dd('this funtion is working');
 
-        $admin->destroy();
+        $admin = Admin::find($request->validated()['id']);
+
+        // dd($admin);
+
+        $admin->delete();
 
         return redirect('/users')->with('info','User has been deleted');
     }

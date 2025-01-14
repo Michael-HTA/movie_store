@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WebControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Actor;
+use App\Models\Movie;
 use Illuminate\Http\Request;
 
 class ActorController extends Controller
@@ -13,9 +14,13 @@ class ActorController extends Controller
      */
     public function index()
     {
-        $actor = Actor::find(1);
-        $result = $actor->movies->pluck('title');
-        return $result;
+        // $actor = Actor::find(1);
+        // $result = $actor->movies->pluck('title');
+        // return $result;
+
+        $movies = Movie::all();
+
+        return view('/pages/movie-trash', ['movies' => $movies]);
     }
 
     /**

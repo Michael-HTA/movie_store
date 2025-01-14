@@ -32,12 +32,12 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('admin.update', ['admin' => 1]) }}'>
+                        <form method='POST' action='{{ route('user.update') }}'>
                             @csrf
                             {{-- @method('PUT') --}}
                             <div class="row">
                                 <div class="col">
-                                    <input type="number" value="{{$admin->id}}" hidden>
+                                    <input type="number" value="{{$admin->id}}" name="id" hidden>
                                 </div>
                             </div>
                             <div class="row">
@@ -55,24 +55,6 @@
                                     <input type="email" name="email" class="form-control border border-2 p-2"
                                         value='{{ old('email',$admin->email) }}'>
                                     @error('email')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Password</label>
-                                    <input type="password" name="password" class="form-control border border-2 p-2"
-                                        value=''>
-                                    @error('password')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Confirm Password</label>
-                                    <input type="password" name="password_confirmation"
-                                        class="form-control border border-2 p-2" value=''>
-                                    @error('password_confirmation')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>

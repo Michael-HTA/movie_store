@@ -17,18 +17,18 @@ Route::get('/logout', function () {
 })->name('logout');
 
 Route::get('/users',[AdminController::class, 'index'])->name('user');
-Route::get('/users/{id}',[AdminController::class, 'show']);
-Route::get('/users/{id}/edit',[AdminController::class, 'edit']);
-Route::post('user/update',[AdminController::class, 'update'])->name('admin.update');
+Route::post('users/update',[AdminController::class, 'update'])->name('user.update');
+Route::post('users/delete',[AdminController::class, 'destroy'])->name('user.delete');
+Route::get('users/register',[AdminController::class, 'create'])->name('user.register');
+Route::post('users/store',[AdminController::class, 'store'])->name('user.register');
+Route::get('/users/{id}',[AdminController::class, 'show'])->name('user.show');
+Route::get('/users/{id}/edit',[AdminController::class, 'edit'])->name('user.edit');
+
 
 Route::get('/movie', function(){
     return view('pages.movie');
 })->name('movie');
 
-
-Route::get('/user/profile', function(){
-    return view('pages.user-profile');
-})->name('user-profile');
 
 Route::get('/movie/detail', function(){
     return view('pages.movie-detail');

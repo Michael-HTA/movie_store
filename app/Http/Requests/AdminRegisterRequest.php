@@ -31,10 +31,10 @@ class AdminRegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email|unique:admin',
+            'email' => 'required|email|unique:admins',
             'password' => ['required', Password::min(6)->mixedCase()->numbers(), 'regex:/^[a-zA-Z0-9]+$/'],
             'image' => 'required|image|max:2048',
-            'role_id' => 'required|integer|exists:roles',
+            'role_id' => 'required|integer|exists:roles,id',
         ];
     }
 }

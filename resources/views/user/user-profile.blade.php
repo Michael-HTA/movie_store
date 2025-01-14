@@ -10,7 +10,7 @@
                 <div class="row gx-4 mb-2">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative" style="margin-left: 10px">
-                            <img src="{{$admin->image}}" alt="profile_image"
+                            <img src="{{ asset('storage/'.$admin->image) }}" alt="profile_image"
                                 class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>

@@ -31,10 +31,10 @@ class AdminUpdateRequest extends FormRequest
     {
         return [
             'id'    => 'required|integer|exists:admins',
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'image' => 'required|image|max:2048',
-            'role_id' => 'required|integer|exists:roles',
+            'name' => 'nullable|string',
+            'email' => 'nullable|email',
+            'image' => 'nullable|image|max:2048',
+            'role_id' => 'nullable|integer|exists:roles',
         ];
     }
 }

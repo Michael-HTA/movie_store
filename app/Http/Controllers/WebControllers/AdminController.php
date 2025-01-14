@@ -7,6 +7,7 @@ use App\Http\Requests\AdminDeleteRequest;
 use App\Http\Requests\AdminRegisterRequest;
 use App\Http\Requests\AdminUpdateRequest;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -86,8 +87,17 @@ class AdminController extends Controller
 
         $admin = Admin::find($request->id);
 
+        if ($request->hasFile('image')) {
+            if ($admin['image']) {
+                Storage::delete($admin['image']);
+            }
+            $admin['image'] = $request->file('image')->store();
+        }
+
         foreach($data as $key => $value){
-            $admin->$key = $value;
+            if($value){
+                $admin->$key = $value;
+            }
         }
 
         $admin->save();

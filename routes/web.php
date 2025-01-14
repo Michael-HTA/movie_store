@@ -20,7 +20,7 @@ Route::get('/users',[AdminController::class, 'index'])->name('user');
 Route::post('users/update',[AdminController::class, 'update'])->name('user.update');
 Route::post('users/delete',[AdminController::class, 'destroy'])->name('user.delete');
 Route::get('users/register',[AdminController::class, 'create'])->name('user.register');
-Route::post('users/store',[AdminController::class, 'store'])->name('user.register');
+Route::post('users/store',[AdminController::class, 'store'])->name('user.store');
 Route::get('/users/{id}',[AdminController::class, 'show'])->name('user.show');
 Route::get('/users/{id}/edit',[AdminController::class, 'edit'])->name('user.edit');
 

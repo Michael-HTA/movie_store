@@ -7,6 +7,8 @@ use App\Http\Requests\AdminDeleteRequest;
 use App\Http\Requests\AdminRegisterRequest;
 use App\Http\Requests\AdminUpdateRequest;
 use App\Models\Admin;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -18,7 +20,7 @@ class AdminController extends Controller
     {
         // dd('this is working');
 
-        $admins = Admin::all();
+        $admins = Admin::withoutTrashed()->get();
 
         return view('user.users', ['admins' => $admins]);
     }
@@ -47,7 +49,7 @@ class AdminController extends Controller
 
         $admin->save();
 
-        return redirect('/users')->with('info','New admin has been granted');
+        return redirect('/users')->with('info', 'New admin has been granted');
     }
 
     /**
@@ -55,13 +57,19 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        $admin = Admin::find($id);
+        try {
+            $admin = Admin::findOrFail($id);
 
-        if (!$admin) {
-            return back()->withErrors(['error' => 'User not found!']);
+            return view('user.user-profile', ['admin' => $admin]);
+
+        } catch (ModelNotFoundException $e)
+        {
+            return redirect('/users')->with('error', 'Admin not found');
+
+        } catch (Exception $e)
+        {
+            return redirect('/users')->with('error', 'Internal Error');
         }
-
-        return view('user.user-profile',['admin' => $admin]);
     }
 
     /**
@@ -75,7 +83,7 @@ class AdminController extends Controller
             return back()->withErrors(['error' => 'User not found!']);
         }
 
-        return view('user.user-edit',['admin' => $admin]);
+        return view('user.user-edit', ['admin' => $admin]);
     }
 
     /**
@@ -87,6 +95,10 @@ class AdminController extends Controller
 
         $admin = Admin::find($request->id);
 
+        if (!$admin) {
+            return back()->with('error', 'Admin not found!');
+        }
+
         if ($request->hasFile('image')) {
             if ($admin['image']) {
                 Storage::delete($admin['image']);
@@ -94,8 +106,8 @@ class AdminController extends Controller
             $admin['image'] = $request->file('image')->store();
         }
 
-        foreach($data as $key => $value){
-            if($value){
+        foreach ($data as $key => $value) {
+            if ($value) {
                 $admin->$key = $value;
             }
         }
@@ -112,12 +124,61 @@ class AdminController extends Controller
     {
         // dd('this funtion is working');
 
-        $admin = Admin::find($request->validated()['id']);
+        $admin = Admin::find($request->id);
 
+        if (!$admin) {
+            return back()->with('error', 'Admin not found!');
+        }
         // dd($admin);
 
         $admin->delete();
 
-        return redirect('/users')->with('info','User has been deleted');
+        return redirect('/users')->with('info', 'User has been deleted');
+    }
+
+    public function trashedUsers()
+    {
+
+        $admins = Admin::onlyTrashed()->get();
+
+        return view('user.trashed-users', ['admins' => $admins]);
+    }
+
+    public function restore($id)
+    {
+
+        $admin = Admin::onlyTrashed()->find($id);
+
+        if (!$admin) {
+            return back()->with('error', 'Admin not found!');
+        }
+
+        $admin->restore();
+
+        return back()->with('info', 'Admin has been restore!');
+    }
+
+    public function forceDelete($id)
+    {
+
+        $admin = Admin::onlyTrashed()->find($id);
+
+        if (!$admin) {
+            return back()->with('error', 'Admin not found!');
+        }
+
+        $admin->forceDelete();
+
+        return back()->with('info', 'Admin has been deleted permantely!');
+    }
+
+    public function createGenre($id, $genre_id)
+    {
+
+        $admin = Admin::withTrashed()->find($id);
+
+        $admin->genres()->attach($genre_id, ['description' => 'genre created']);
+
+        return true;
     }
 }

@@ -28,7 +28,7 @@ class Admin extends Model
         return $this->hasMany(Movie::class);
     }
 
-    public function genre(){
+    public function genres(){
         return $this->belongsToMany(Genre::class);
     }
 

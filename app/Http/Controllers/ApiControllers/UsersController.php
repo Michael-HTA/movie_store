@@ -39,7 +39,7 @@ class UsersController extends Controller
             }
         } catch (Exception $e) {
 
-            Log::error($e->getMessage());
+            // Log::error($e->getMessage());
 
             return response()->error($request, null, 'Internal Server Error', 500);
         }
@@ -62,7 +62,7 @@ class UsersController extends Controller
 
         } catch (Exception $e) {
 
-            Log::error($e->getMessage());
+            // Log::error($e->getMessage());
 
             return response()->error($request, null, 'Internal Server Error', 500);
         }
@@ -85,7 +85,7 @@ class UsersController extends Controller
 
         } catch (Exception $e) {
 
-            Log::error($e->getMessage());
+            // Log::error($e->getMessage());
 
             return response()->error($request, null, 'Internal Server Error', 500);
         }

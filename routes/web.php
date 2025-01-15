@@ -21,8 +21,11 @@ Route::post('users/update',[AdminController::class, 'update'])->name('user.updat
 Route::post('users/delete',[AdminController::class, 'destroy'])->name('user.delete');
 Route::get('users/register',[AdminController::class, 'create'])->name('user.register');
 Route::post('users/store',[AdminController::class, 'store'])->name('user.store');
+Route::get('/users/trashed', [AdminController::class, 'trashedUsers'])->name('users.trashed');
 Route::get('/users/{id}',[AdminController::class, 'show'])->name('user.show');
 Route::get('/users/{id}/edit',[AdminController::class, 'edit'])->name('user.edit');
+Route::get('/users/{id}/restore',[AdminController::class, 'restore'])->name('user.restore');
+Route::get('users/{id}/force-delete',[AdminController::class, 'forceDelete'])->name('user.force.delete');
 
 
 Route::get('/movie', function(){

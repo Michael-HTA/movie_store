@@ -1,9 +1,9 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
 
-    <x-navbars.sidebar activePage="user-management"></x-navbars.sidebar>
+    <x-navbars.sidebar activePage="trashed-users"></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="User Management"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Trashed User Management"></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
@@ -14,23 +14,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">Close</button>
                         </div>
                     @endif
-                    @if (session('error'))
-                        <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            {{ session('error') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">Close</button>
-                        </div>
-                    @endif
-
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white mx-3"><strong>Users List</strong></h6>
+                                <h6 class="text-white mx-3"><strong>Trashed Users List</strong></h6>
                             </div>
-                        </div>
-                        <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{route('user.register')}}"><i
-                                    class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New
-                                User</a>
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="table-responsive p-0">
@@ -101,22 +89,23 @@
                                                         class="text-secondary text-xs font-weight-bold">{{ $admin->created_at->format('d-m-Y') }}</span>
                                                 </td>
                                                 <td class="align-middle">
-                                                    <div class="d-flex align-items-center">
                                                         <a rel="tooltip" class="btn btn-success btn-link me-1"
-                                                            href="{{ route('user.edit', $admin->id) }}"
+                                                            href="{{ route('user.restore', $admin->id) }}"
                                                             data-original-title="" title="">
-                                                            <i class="material-icons">edit</i>
+                                                            <i class="material-icons"><span class="material-symbols-outlined">
+                                                                restore_from_trash
+                                                                </span></i>
                                                             <div class="ripple-container"></div>
                                                         </a>
-                                                        <form method="POST" action="{{ route('user.delete') }}" class="m-0 p-0">
-                                                            @csrf
-                                                            <input type="number" value="{{$admin->id}}" name='id' hidden>
-                                                            <button type="submit" class="btn btn-danger btn-link"
-                                                                data-original-title="" title="">
-                                                                <i class="material-icons">close</i>
-                                                                <div class="ripple-container"></div>
-                                                            </button>
-                                                        </form>
+
+                                                        <a rel="tooltip" class="btn btn-danger btn-link"
+                                                            href="{{ route('user.force.delete', $admin->id) }}"
+                                                            data-original-title="" title="">
+                                                            <i class="material-icons"><span class="material-symbols-outlined">
+                                                                delete
+                                                                </span></i>
+                                                            <div class="ripple-container"></div>
+                                                        </a>
                                                     </div>
                                                 </td>
 

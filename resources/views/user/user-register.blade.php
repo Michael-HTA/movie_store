@@ -10,18 +10,17 @@
                 <div class="row gx-4 mb-2">
                     <div class="col-auto">
                         @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <div class="avatar avatar-xl position-relative">
-                            <img src="" alt="profile_image"
-                                class="w-100 border-radius-lg shadow-sm">
+                            <span class="material-icons" style="font-size: 80px; color: #888;">account_circle</span>
                         </div>
                     </div>
                     <div class="col-auto my-auto">
@@ -92,7 +91,7 @@
 
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
-                        {{-- </form> --}}
+                            {{-- </form> --}}
 
                     </div>
                 </div>

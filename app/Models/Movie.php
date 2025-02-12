@@ -11,6 +11,20 @@ class Movie extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'release',
+        'rating',
+        'type_id',
+        'director_id',
+        'production_id',
+        'admin_id',
+        'link'
+    ];
+
+
     public function actors(): BelongsToMany {
         return $this->belongsToMany(Actor::class);
     }

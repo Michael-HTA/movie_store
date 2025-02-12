@@ -32,7 +32,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'movie' ? ' active bg-gradient-primary' : '' }} "
-                href="{{ route('movie')}}">
+                href="{{route('movies.index')}}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <span class="material-icons opacity-10">movie</span>
                 </div>

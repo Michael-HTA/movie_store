@@ -3,7 +3,16 @@
 namespace App\Http\Controllers\WebControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
+use App\Models\Actor;
+use App\Models\Director;
+use App\Models\Genre;
+use App\Models\Movie;
+use App\Models\Type;
+use App\Models\Production;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MovieController extends Controller
 {
@@ -12,7 +21,8 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        $movies = Movie::with(['actors', 'genres'])->paginate(10);
+        return view('movies.movie-list', compact('movies'));
     }
 
     /**
@@ -20,15 +30,55 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        return view('movies.movie-create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMovieRequest $request)
     {
-        //
+        if ($request->hasFile('movie_image')) {
+            $imagepath = Storage::disk('public')->put('movies', $request->movie_image);
+        };
+
+        $genreIds = [];
+        foreach ($request->genres as $genre) {
+            $newGenre = Genre::firstOrCreate(['name' => trim($genre)], ['admin_id' => 1]);
+            $genreIds[] = $newGenre->id;
+        }
+
+        $director = Director::firstOrCreate(['name' => trim($request->director)]);
+        $production = Production::firstOrCreate(['name' => trim($request->production)]);
+
+        $actorIds = [];
+        foreach ($request->males as $male) {
+            $newActor = Actor::firstOrCreate(['name' => trim($male), 'gender' => 'Male']);
+            $actorIds[] = $newActor->id;
+        };
+
+        foreach ($request->females as $female) {
+            $newActor = Actor::firstOrCreate(['name' => trim($female), 'gender' => 'Female']);
+            $actorIds[] = $newActor->id;
+        };
+
+        $movie = Movie::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $imagepath,
+            'release' => $request->release,
+            'rating' => $request->rating,
+            'admin_id' => 1,
+            'type_id' => $request->movie_type_id,
+            'director_id' => $director->id,
+            'production_id' => $production->id,
+            'link' => $request->trailer_link,
+        ]);
+
+        $movie->actors()->attach($actorIds);
+        $movie->genres()->attach($genreIds);
+
+        return redirect()->route('movies.index');
     }
 
     /**
@@ -36,7 +86,9 @@ class MovieController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $movie  = Movie::with(['actors', 'genres'])->find($id);
+
+        return $movie;
     }
 
     /**
@@ -44,15 +96,74 @@ class MovieController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $movie  = Movie::with(['actors', 'genres'])->find($id);
+
+        return view('movies.movie-edit', compact('movie'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateMovieRequest $request, string $id)
     {
-        //
+
+        $movie = Movie::findOrFail($id);
+
+        $updateMovie = $request->except(['genres', 'males', 'females', 'director', 'production']);
+
+        $updateMovie = array_filter($updateMovie);
+
+        if ($request->hasFile('movie_image')) {
+            $updateMovie['image'] = Storage::disk('public')->put('movies', $request->movie_image);
+        }
+
+
+        $genreIds = [];
+
+        if ($request->genres) {
+            foreach ($request->genres as $genre) {
+                $newGenre = Genre::firstOrCreate(['name' => trim($genre)], ['admin_id' => 1]);
+                $genreIds[] = $newGenre->id;
+            }
+        }
+
+
+        $actorIds = [];
+        if ($request->males) {
+            foreach ($request->males as $male) {
+                $newActor = Actor::firstOrCreate(['name' => trim($male), 'gender' => 'Male']);
+                $actorIds[] = $newActor->id;
+            };
+        }
+
+        if ($request->females) {
+            foreach ($request->females as $female) {
+                $newActor = Actor::firstOrCreate(['name' => trim($female), 'gender' => 'Female']);
+                $actorIds[] = $newActor->id;
+            };
+        }
+
+
+
+        $director = Director::firstOrCreate(['name' => trim($request->director)]);
+        $updateMovie['director_id'] =  $director->id;
+
+        $production = Production::firstOrCreate(['name' => trim($request->production)]);
+        $updateMovie['production_id'] =  $production->id;
+
+
+        $movie->update($updateMovie);
+
+
+        if($genreIds){
+            $movie->genres()->sync($genreIds);
+        }
+
+        if($actorIds){
+            $movie->actors()->sync($actorIds);
+        }
+
+        return redirect()->route('movies.index');
     }
 
     /**
@@ -60,6 +171,9 @@ class MovieController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $movie = Movie::find($id);
+        $movie->delete();
+
+        return redirect()->route('movies.index');
     }
 }

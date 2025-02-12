@@ -108,9 +108,8 @@
                                                             <i class="material-icons">edit</i>
                                                             <div class="ripple-container"></div>
                                                         </a>
-                                                        <form method="POST" action="{{ route('user.delete') }}" class="m-0 p-0">
+                                                        <form method="POST" action="{{ route('user.delete', ['id' => $admin->id]) }}" class="m-0 p-0">
                                                             @csrf
-                                                            <input type="number" value="{{$admin->id}}" name='id' hidden>
                                                             <button type="submit" class="btn btn-danger btn-link"
                                                                 data-original-title="" title="">
                                                                 <i class="material-icons">close</i>

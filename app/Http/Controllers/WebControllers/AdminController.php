@@ -9,6 +9,7 @@ use App\Http\Requests\AdminUpdateRequest;
 use App\Models\Admin;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -58,7 +59,7 @@ class AdminController extends Controller
     public function show($id)
     {
         try {
-            $admin = Admin::findOrFail($id);
+            $admin = Admin::with('role')->findOrFail($id);
 
             return view('user.user-profile', ['admin' => $admin]);
 
@@ -68,6 +69,8 @@ class AdminController extends Controller
 
         } catch (Exception $e)
         {
+            Log::error($e->getMessage());
+
             return redirect('/users')->with('error', 'Internal Error');
         }
     }
@@ -77,7 +80,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $admin = Admin::find($id);
+        $admin = Admin::with('role')->find($id);
 
         if (!$admin) {
             return back()->withErrors(['error' => 'User not found!']);
@@ -167,6 +170,10 @@ class AdminController extends Controller
             return back()->with('error', 'Admin not found!');
         }
 
+        if($admin->image){
+            Storage::delete($admin->image);
+        }
+
         $admin->forceDelete();
 
         return back()->with('info', 'Admin has been deleted permantely!');
@@ -178,6 +185,16 @@ class AdminController extends Controller
         $admin = Admin::withTrashed()->find($id);
 
         $admin->genres()->attach($genre_id, ['description' => 'genre created']);
+
+        return true;
+    }
+
+    public function updateAndDeleteMovies($id, $movie_id)
+    {
+
+        $admin = Admin::withTrashed()->find($id);
+
+        $admin->movies()->attach($movie_id, ['description' => 'genre created']);
 
         return true;
     }

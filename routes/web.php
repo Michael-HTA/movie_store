@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WebControllers\MovieController;
 use App\Http\Controllers\WebControllers\ActorController;
 use App\Http\Controllers\WebControllers\AdminController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,8 @@ Route::get('/logout', function () {
     return view('dashboard.index');
 })->name('logout');
 
+
+// user routes
 Route::get('/users',[AdminController::class, 'index'])->name('user');
 Route::post('users/update',[AdminController::class, 'update'])->name('user.update');
 Route::post('users/delete',[AdminController::class, 'destroy'])->name('user.delete');
@@ -27,15 +30,18 @@ Route::get('/users/{id}/edit',[AdminController::class, 'edit'])->name('user.edit
 Route::get('/users/{id}/restore',[AdminController::class, 'restore'])->name('user.restore');
 Route::get('users/{id}/force-delete',[AdminController::class, 'forceDelete'])->name('user.force.delete');
 
-
-Route::get('/movie', function(){
-    return view('pages.movie');
-})->name('movie');
+// movie routes
+Route::resource('movies', MovieController::class);
 
 
-Route::get('/movie/detail', function(){
-    return view('pages.movie-detail');
-})->name('movie-detail');
+// Route::get('/movie', function(){
+//     return view('pages.movie');
+// })->name('movie');
+
+
+// Route::get('/movie/detail', function(){
+//     return view('pages.movie-detail');
+// })->name('movie-detail');
 
 
 Route::get('/login', function(){

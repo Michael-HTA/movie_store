@@ -6,12 +6,23 @@
         <x-navbars.navs.auth titlePage='Edit User'></x-navbars.navs.auth>
         <!-- End Navbar -->
         <div class="container-fluid px-2 px-md-4">
+            <div class="row">
+                <div class="col">
+                    @if (session('status'))
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close">Close</button>
+                        </div>
+                    @endif
+                </div>
+            </div>
             <div class="card card-body mx-3 mx-md-4" style="margin-top: 25px">
                 <div class="row gx-4 mb-2">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <img src="{{ $admin->image != 'default' ? asset('storage/'.$admin->image) : asset('assets/img/bruce-mars.jpg') }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
-
+                            <img src="{{ $admin->image != 'default' ? asset('storage/' . $admin->image) : asset('assets/img/bruce-mars.jpg') }}"
+                                alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
                     <div class="col-auto my-auto">
@@ -32,19 +43,14 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('user.update') }}'>
+                        <form method='POST' action='{{ route('user.update', ['id' => $admin->id]) }}'>
                             @csrf
                             {{-- @method('PUT') --}}
-                            <div class="row">
-                                <div class="col">
-                                    <input type="number" value="{{$admin->id}}" name="id" hidden>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>
                                     <input type="text" name="name" class="form-control border border-2 p-2"
-                                        value='{{ old('name',$admin->name) }}'>
+                                        value='{{ old('name', $admin->name) }}'>
                                     @error('name')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -53,7 +59,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Email address</label>
                                     <input type="email" name="email" class="form-control border border-2 p-2"
-                                        value='{{ old('email',$admin->email) }}'>
+                                        value='{{ old('email', $admin->email) }}'>
                                     @error('email')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -83,7 +89,7 @@
 
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
-                        {{-- </form> --}}
+                            {{-- </form> --}}
 
                     </div>
                 </div>
